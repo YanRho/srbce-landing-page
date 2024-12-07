@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SRB Construction & Engineering Services Website
 
-## Getting Started
+## Table of Contents
 
-First, run the development server:
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Views](#views)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Introduction
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The SRB Construction and Engineering Services website is a fully responsive, modern, and interactive one-page website designed to showcase SRB Construction & Engineering Services' projects, services, and contact information. Built with scalability, responsiveness, and user engagement in mind, this project reflects the company's commitment to quality and excellence.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Responsive Design**: Ensures seamless viewing across all devices.
+- **Interactive Services Section**: Cards with descriptive overlays for each service.
+- **Project Gallery**: A functional carousel with a lightbox for better visualization of successful projects.
+- **Contact Form**: A simple and effective form to facilitate communication with clients.
+- **About Us Section**: Highlights the company's background and mission.
+- **Scroll Animations**: Adds a modern touch with subtle visual effects.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technologies Used
 
-## Deploy on Vercel
+- **Frontend**: Next.js, React, Tailwind CSS, Shadcn UI, Figma
+- **Backend**: Google APP Password for Contact Form Functionality
+- **Deployment**: TBA
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Views
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Header + Hero section
+![alt text](image.png)
+
+About section
+![alt text](image-1.png)
+
+Gallery Section
+![alt text](image-2.png)
+
+Contact Form
+![alt text](image-5.png)
+
+Footer Section
+![alt text](image-4.png)
