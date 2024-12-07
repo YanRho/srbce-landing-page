@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; // Import Shadcn Button
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -39,14 +39,20 @@ export const Contact = () => {
         throw new Error(errorData.error || "Unknown error occurred");
       }
 
+      await response.json(); // No assignment to `data`
       setSuccess(true);
       setFormData({ name: "", email: "", message: "" });
       setError("");
-    } catch (err: any) {
-      console.error("Error sending message:", err.message);
-      setError(
-        err.message || "Failed to send message. Please try again later."
-      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error sending message:", err.message);
+        setError(
+          err.message || "Failed to send message. Please try again later."
+        );
+      } else {
+        console.error("Unexpected error:", err);
+        setError("An unexpected error occurred. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }
@@ -108,7 +114,14 @@ export const Contact = () => {
             <p className="text-green-600 mb-4">Message sent successfully!</p>
           )}
           {error && <p className="text-red-600 mb-4">{error}</p>}
-          <Button type="submit" disabled={loading} className="w-full">
+
+          {/* Shadcn Button */}
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full"
+            variant="default"
+          >
             {loading ? "Sending..." : "Send Message"}
           </Button>
         </form>

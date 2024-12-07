@@ -1,5 +1,6 @@
 import About from "@/components/sections/about";
 import Contact from "@/components/sections/contact";
+import Footer from "@/components/sections/footer";
 import Gallery from "@/components/sections/gallery";
 import Header from "@/components/sections/header";
 import Hero from "@/components/sections/hero";
@@ -15,6 +16,7 @@ export default function Home() {
     <Gallery/>
     <Services/>
     <Contact/>
+    <Footer/>
     </>
 
   );

@@ -27,7 +27,7 @@ export default async function handler(
     });
 
     const mailOptions = {
-      from: `"${name}" <${email}>`, // Shows sender's name and email
+      from: `"${name}" <${email}>`, // Sender's name and email
       to: process.env.GMAIL_USER, // Your email address
       subject: "Message from SRBCE Website",
       text: `You have a new message from your website contact form:
@@ -47,8 +47,19 @@ Message: ${message}`,
     await transporter.sendMail(mailOptions);
 
     return res.status(200).json({ success: true });
-  } catch (error: any) {
-    console.error("Error sending email:", error.message);
-    return res.status(500).json({ error: "Failed to send email." });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error sending email:", error.message);
+      return res
+        .status(500)
+        .json({ error: "Failed to send email.", details: error.message });
+    } else {
+      console.error("Unexpected error:", error);
+      return res
+        .status(500)
+        .json({
+          error: "An unexpected error occurred. Please try again later.",
+        });
+    }
   }
 }

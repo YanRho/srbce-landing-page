@@ -75,8 +75,8 @@ export const Gallery = () => {
                     <Image
                       src={src}
                       alt={`Project ${index + 1}`}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      style={{ objectFit: "cover" }}
                       priority={index === 0}
                       placeholder="blur"
                       blurDataURL="/images/placeholder.png"
