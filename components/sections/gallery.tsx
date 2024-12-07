@@ -84,8 +84,10 @@ export const Gallery = () => {
                         ((e.target as HTMLImageElement).src =
                           "/images/placeholder.png")
                       }
+                      loading={index === 0 ? "eager" : "lazy"} // Lazy load all non-priority images
                       className="transition-transform duration-300 ease-in-out transform hover:scale-105"
                     />
+
                     {/* Overlay Text */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300">
                       <span className="text-white font-bold text-lg">
