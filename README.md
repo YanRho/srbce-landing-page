@@ -34,17 +34,17 @@ The SRB Construction and Engineering Services website is a fully responsive, mod
 
 ## Views
 
-Header + Hero section
+Header + Hero Section
 ![alt text](image.png)
 
-About section
+About Section
 ![alt text](image-1.png)
 
 Gallery Section
 ![alt text](image-2.png)
 
-Contact Form
-![alt text](image-5.png)
+Services Section
+![alt text](image-3.png)
 
-Footer Section
+Contact Form + Footer Section
 ![alt text](image-4.png)
