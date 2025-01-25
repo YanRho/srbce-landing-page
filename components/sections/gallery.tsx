@@ -5,21 +5,21 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 
 const images: string[] = [
-  "/images/projects/1.jpg",
-  "/images/projects/2.jpg",
-  "/images/projects/3.jpg",
-  "/images/projects/4.jpg",
-  "/images/projects/5.jpg",
-  "/images/projects/6.jpg",
-  "/images/projects/7.jpg",
-  "/images/projects/8.jpg",
-  "/images/projects/9.jpg",
-  "/images/projects/10.jpg",
-  "/images/projects/11.jpg",
-  "/images/projects/12.jpg",
-  "/images/projects/13.jpg",
-  "/images/projects/14.jpg",
-  "/images/projects/15.jpg",
+  "/images/projects/1.webp",
+  "/images/projects/2.webp",
+  "/images/projects/3.webp",
+  "/images/projects/4.webp",
+  "/images/projects/5.webp",
+  "/images/projects/6.webp",
+  "/images/projects/7.webp",
+  "/images/projects/8.webp",
+  "/images/projects/9.webp",
+  "/images/projects/10.webp",
+  "/images/projects/11.webp",
+  "/images/projects/12.webp",
+  "/images/projects/13.webp",
+  "/images/projects/14.webp",
+  "/images/projects/15.webp",
 ];
 
 export const Gallery = () => {
