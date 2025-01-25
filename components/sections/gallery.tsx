@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 
-const images: string[] = [
+const images = [
   "/images/projects/1.webp",
   "/images/projects/2.webp",
   "/images/projects/3.webp",
@@ -28,30 +28,23 @@ export const Gallery = () => {
     align: "center",
     skipSnaps: false,
   });
-  const [lightboxIndex, setLightboxIndex] = useState<number>(-1); // Lightbox active image index
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const closeLightbox = () => setLightboxIndex(-1);
+  const closeLightbox = () => setLightboxIndex(null);
 
   const showPrevImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setLightboxIndex((prev) => (prev === 0 ? images.length - 1 : prev! - 1));
   }, []);
 
   const showNextImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setLightboxIndex((prev) => (prev === images.length - 1 ? 0 : prev! + 1));
   }, []);
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   useEffect(() => {
-    if (emblaApi) {
-      emblaApi.reInit(); // Reinitialize Embla in case of state changes
-    }
+    emblaApi?.reInit(); // Reinitialize Embla Carousel on state changes
   }, [emblaApi]);
 
   return (
@@ -61,7 +54,8 @@ export const Gallery = () => {
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-gray-800">
           Projects & Accomplishments
         </h2>
-        {/* Embla Carousel */}
+
+        {/* Carousel */}
         <div className="relative">
           <div ref={emblaRef} className="overflow-hidden">
             <div className="flex">
@@ -69,7 +63,7 @@ export const Gallery = () => {
                 <div
                   key={index}
                   className="relative min-w-[80%] md:min-w-[25%] px-2"
-                  onClick={() => setLightboxIndex(index)} // Open lightbox on click
+                  onClick={() => setLightboxIndex(index)}
                 >
                   <div className="relative w-full h-80 lg:h-[500px] bg-gray-200 rounded-lg overflow-hidden cursor-pointer">
                     <Image
@@ -77,18 +71,12 @@ export const Gallery = () => {
                       alt={`Project ${index + 1}`}
                       fill
                       style={{ objectFit: "cover" }}
-                      priority={index === 0}
                       placeholder="blur"
                       blurDataURL="/images/placeholder.png"
-                      onError={(e) =>
-                        ((e.target as HTMLImageElement).src =
-                          "/images/placeholder.png")
-                      }
-                      loading={index === 0 ? "eager" : "lazy"} // Lazy load all non-priority images
+                      loading={index === 0 ? "eager" : "lazy"}
                       className="transition-transform duration-300 ease-in-out transform hover:scale-105"
                     />
-
-                    {/* Overlay Text */}
+                    {/* Overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300">
                       <span className="text-white font-bold text-lg">
                         View Project
@@ -99,7 +87,8 @@ export const Gallery = () => {
               ))}
             </div>
           </div>
-          {/* Prev and Next Buttons */}
+
+          {/* Navigation Buttons */}
           <button
             onClick={scrollPrev}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow hover:bg-gray-700"
@@ -116,7 +105,7 @@ export const Gallery = () => {
       </div>
 
       {/* Lightbox */}
-      {lightboxIndex !== -1 && (
+      {lightboxIndex !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
           <button
             className="absolute top-4 right-4 text-white text-3xl font-bold"
@@ -141,7 +130,6 @@ export const Gallery = () => {
             alt={`Project ${lightboxIndex + 1}`}
             width={1200}
             height={800}
-            objectFit="contain"
             className="rounded-lg"
           />
         </div>

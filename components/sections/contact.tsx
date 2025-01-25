@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button"; // Import Shadcn Button
+import { Button } from "@/components/ui/button";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +18,8 @@ export const Contact = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,9 +29,7 @@ export const Contact = () => {
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -39,18 +38,15 @@ export const Contact = () => {
         throw new Error(errorData.error || "Unknown error occurred");
       }
 
-      await response.json(); // No assignment to `data`
       setSuccess(true);
       setFormData({ name: "", email: "", message: "" });
       setError("");
     } catch (err: unknown) {
       if (err instanceof Error) {
-        console.error("Error sending message:", err.message);
         setError(
           err.message || "Failed to send message. Please try again later."
         );
       } else {
-        console.error("Unexpected error:", err);
         setError("An unexpected error occurred. Please try again later.");
       }
     } finally {
@@ -62,11 +58,9 @@ export const Contact = () => {
     <section
       id="contact"
       className="h-[70vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url('/images/contact-bg.jpg')`,
-      }}
+      style={{ backgroundImage: "url('/images/contact-bg.jpg')" }}
     >
-      <div className="bg-black bg-opacity-50 p-20 w-full flex justify-center">
+      <div className="bg-black bg-opacity-50 p-8 md:p-20 w-full flex justify-center">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-6 shadow-md rounded-lg max-w-lg w-full"
@@ -74,6 +68,8 @@ export const Contact = () => {
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Connect with us!
           </h2>
+
+          {/* Name Input */}
           <div className="mb-4">
             <Input
               id="name"
@@ -86,6 +82,8 @@ export const Contact = () => {
               className="p-3 border rounded-md w-full"
             />
           </div>
+
+          {/* Email Input */}
           <div className="mb-4">
             <Input
               id="email"
@@ -98,6 +96,8 @@ export const Contact = () => {
               className="p-3 border rounded-md w-full"
             />
           </div>
+
+          {/* Message Input */}
           <div className="mb-4">
             <Textarea
               id="message"
@@ -110,12 +110,16 @@ export const Contact = () => {
               className="p-3 border rounded-md w-full"
             />
           </div>
-          {success && (
-            <p className="text-green-600 mb-4">Message sent successfully!</p>
-          )}
-          {error && <p className="text-red-600 mb-4">{error}</p>}
 
-          {/* Shadcn Button */}
+          {/* Success and Error Messages */}
+          {success && (
+            <p className="text-green-600 mb-4 text-center">
+              Message sent successfully!
+            </p>
+          )}
+          {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
+
+          {/* Submit Button */}
           <Button
             type="submit"
             disabled={loading}
