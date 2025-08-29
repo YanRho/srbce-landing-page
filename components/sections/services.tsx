@@ -1,6 +1,6 @@
 "use client";
 
-import { Ruler, Hammer, MessageCircle, ShieldCheck, Clock4 } from "lucide-react";
+import { Ruler, Hammer, MessageCircle } from "lucide-react";
 import Link from "next/link";
 
 const services = [
@@ -29,7 +29,7 @@ const services = [
 
 export const Services = () => {
   return (
-    <section id="services" className="py-20 bg-gradient-to-b from-gray-50 to-white text-slate-900">
+    <section id="services" className="py-20 bg-[#5eb4f7]/5 text-slate-900">
       <div className="container mx-auto px-4 lg:px-16">
         {/* Section Heading */}
         <header className="text-center mb-12">
@@ -38,19 +38,6 @@ export const Services = () => {
             Practical, reliable, and built around your scope, budget, and timeline.
           </p>
         </header>
-
-        {/* Feature Badges (optional trust strip) */}
-        <div className="mx-auto mb-8 flex flex-wrap items-center justify-center gap-3 text-sm text-slate-700">
-          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
-            <ShieldCheck className="h-4 w-4 text-[#5eb4f7]" /> Safety First
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
-            <Clock4 className="h-4 w-4 text-[#5eb4f7]" /> On-Time Delivery
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
-            <span className="h-2 w-2 rounded-full bg-[#5eb4f7]" /> Quality Assured
-          </span>
-        </div>
 
         {/* Cards Grid */}
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,8 +59,6 @@ export const Services = () => {
             </li>
           ))}
         </ul>
-
-        
       </div>
     </section>
   );

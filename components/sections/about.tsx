@@ -4,102 +4,99 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 /**
- * About Section (Logo Left, Cards Right)
- * - Left column: Logo
- * - Right column: stacked cards (Description, Mission, Vision)
- * - Natural height cards wrapping content
+ * About Section – Brand Accent Wash
+ * - Keeps original text content
+ * - Background: subtle brand accent tint (#5eb4f7 at 5%)
+ * - Logo left, cards right; responsive & accessible
  */
 
 export const About = () => {
   return (
-    <section id="about" className="py-24 bg-gradient-to-b from-gray-50 to-white text-gray-900 relative">
+    <section
+      id="about"
+      className="relative py-24 bg-[#5eb4f7]/5 text-slate-900"
+      aria-label="About SRBCE"
+    >
       <div className="container mx-auto px-6 lg:px-20">
         {/* Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <motion.h2
-            className="text-4xl bold:text-5xl font-extrabold"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-4xl md:text-5xl font-extrabold tracking-tight"
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            ABOUT US
+            ABOUT <span className="text-[#5eb4f7]">THE COMPANY</span>
           </motion.h2>
+          <div className="mt-3 h-1 w-20 mx-auto bg-[#5eb4f7] rounded-full" />
         </div>
 
         {/* Two Column Split */}
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Left: Logo Graphic */}
           <motion.div
             className="flex justify-center lg:justify-start"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
           >
             <Image
               src="/images/srbcelogo.png"
-              width={420}
-              height={420}
               alt="SRBCE Logo"
-              className="drop-shadow-xl"
+              width={440}
+              height={440}
+              sizes="(min-width: 1024px) 440px, 60vw"
+              className="w-auto h-auto max-w-[440px] drop-shadow-xl"
+              priority
             />
           </motion.div>
 
-          {/* Right: Cards */}
-          <div className="space-y-8">
-            {/* Description Card */}
-            <motion.div
-              className="rounded-xl p-6 bg-white shadow-md border border-gray-100"
-              initial={{ opacity: 0, y: 20 }}
+          {/* Right: Cards (original copy preserved) */}
+          <div className="space-y-6">
+            {/* Who We Are */}
+            <motion.article
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-bold text-[#5eb4f7] mb-3">Who We Are</h3>
-              <p className="text-lg leading-relaxed text-gray-700">
-                <span className="font-bold text-gray-900 text-xl">
-                  SRB Construction Services
-                </span>{" "}
-                is a company focusing on innovative construction practices dedicated
-                to delivering high-quality and sustainable solutions to our clients.
-                With a commitment to excellence, integrity, and client satisfaction,
-                we have established ourselves as a trusted partner in this industry.
+              <h3 className="text-2xl font-bold text-[#5eb4f7] mb-2">Who We Are</h3>
+              <p className="text-lg leading-relaxed text-slate-700">
+                <span className="font-bold text-slate-900 text-xl">SRB Construction Services</span>{" "}
+                is a company focusing on innovative construction practices dedicated to delivering high-quality and sustainable solutions to our clients. With a commitment to excellence, integrity, and client satisfaction, we have established ourselves as a trusted partner in this industry.
               </p>
-            </motion.div>
+            </motion.article>
 
-            {/* Mission Card */}
-            <motion.div
-              className="rounded-xl p-6 bg-white shadow-md border border-gray-100"
-              initial={{ opacity: 0, y: 20 }}
+            {/* Mission */}
+            <motion.article
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-bold text-[#5eb4f7] mb-3">Mission</h3>
-              <p className="text-lg leading-relaxed text-gray-700">
-                Our Mission is to redefine the construction landscape through unwavering dedication
-                to quality, innovation, and sustainability. Grounded in integrity
-                and driven by a passion for excellence, we strive to exceed
-                expectations, empower communities, and leave a lasting legacy of
-                craftsmanship and integrity.
+              <h3 className="text-2xl font-bold text-[#5eb4f7] mb-2">Mission</h3>
+              <p className="text-lg leading-relaxed text-slate-700">
+                Our Mission is to redefine the construction landscape through unwavering dedication to quality, innovation, and sustainability. Grounded in integrity and driven by a passion for excellence, we strive to exceed expectations, empower communities, and leave a lasting legacy of craftsmanship and integrity.
               </p>
-            </motion.div>
+            </motion.article>
 
-            {/* Vision Card */}
-            <motion.div
-              className="rounded-xl p-6 bg-white shadow-md border border-gray-100"
-              initial={{ opacity: 0, y: 20 }}
+            {/* Vision */}
+            <motion.article
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-bold text-[#5eb4f7] mb-3">Vision</h3>
-              <p className="text-lg leading-relaxed text-gray-700">
-                We envision a future where our name resonates as the epitome of
-                excellence in the construction industry.
+              <h3 className="text-2xl font-bold text-[#5eb4f7] mb-2">Vision</h3>
+              <p className="text-lg leading-relaxed text-slate-700">
+                We envision a future where our name resonates as the epitome of excellence in the construction industry.
               </p>
-            </motion.div>
+            </motion.article>
           </div>
         </div>
       </div>
