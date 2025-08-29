@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import useEmblaCarousel from "embla-carousel-react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
+// Uses your existing local project images
 const images = [
   "/images/projects/1.webp",
   "/images/projects/2.webp",
@@ -23,115 +24,123 @@ const images = [
 ];
 
 export const Gallery = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "center",
-    skipSnaps: false,
-  });
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const closeLightbox = () => setLightboxIndex(null);
-
-  const showPrevImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev === 0 ? images.length - 1 : prev! - 1));
+  const open = (i: number) => setLightboxIndex(i);
+  const close = () => setLightboxIndex(null);
+  const prev = useCallback(() => {
+    setLightboxIndex((p) => (p === null ? p : p === 0 ? images.length - 1 : p - 1));
+  }, []);
+  const next = useCallback(() => {
+    setLightboxIndex((p) => (p === null ? p : p === images.length - 1 ? 0 : p + 1));
   }, []);
 
-  const showNextImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev === images.length - 1 ? 0 : prev! + 1));
-  }, []);
-
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-
+  // Keyboard + scroll lock when lightbox open
   useEffect(() => {
-    emblaApi?.reInit(); // Reinitialize Embla Carousel on state changes
-  }, [emblaApi]);
+    if (lightboxIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [lightboxIndex, next, prev]);
 
   return (
-    <section id="gallery" className="py-24 bg-gray-100 shadow-inner">
-      <div className="container mx-auto px-4">
-        {/* Section Heading */}
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-gray-800">
-          Projects & Accomplishments
-        </h2>
+    <section id="gallery" className="py-20 bg-white text-slate-900">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-3">PROJECTS &amp; ACCOMPLISHMENTS</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto mb-10">
+            Some of our recent projects delivered with care and precision.
+          </p>
+        </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          <div ref={emblaRef} className="overflow-hidden">
-            <div className="flex">
-              {images.map((src, index) => (
-                <div
-                  key={index}
-                  className="relative min-w-[80%] md:min-w-[25%] px-2"
-                  onClick={() => setLightboxIndex(index)}
+        {/* Responsive Grid */}
+        <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {images.map((src, i) => (
+            <li key={i} className="">
+              <figure className="group relative overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm focus-within:shadow-md">
+                <button
+                  type="button"
+                  className="block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded-lg"
+                  aria-label={`Open project ${i + 1}`}
+                  onClick={() => open(i)}
                 >
-                  <div className="relative w-full h-80 lg:h-[500px] bg-gray-200 rounded-lg overflow-hidden cursor-pointer">
+                  <div className="relative w-full aspect-[4/3] bg-slate-100">
                     <Image
                       src={src}
-                      alt={`Project ${index + 1}`}
+                      alt={`Project ${i + 1}`}
                       fill
-                      style={{ objectFit: "cover" }}
-                      placeholder="blur"
-                      blurDataURL="/images/placeholder.png"
-                      loading={index === 0 ? "eager" : "lazy"}
-                      className="transition-transform duration-300 ease-in-out transform hover:scale-105"
+                      sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      priority={i < 2}
                     />
-                    {/* Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-white font-bold text-lg">
-                        View Project
-                      </span>
-                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation Buttons */}
-          <button
-            onClick={scrollPrev}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow hover:bg-gray-700"
-          >
-            &larr;
-          </button>
-          <button
-            onClick={scrollNext}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow hover:bg-gray-700"
-          >
-            &rarr;
-          </button>
-        </div>
+                </button>
+              </figure>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Lightbox */}
       {lightboxIndex !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Project ${lightboxIndex + 1}`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4"
+          onClick={close}
+        >
           <button
-            className="absolute top-4 right-4 text-white text-3xl font-bold"
-            onClick={closeLightbox}
+            className="absolute top-6 right-6 text-white hover:text-[#5eb4f7]"
+            aria-label="Close lightbox"
+            onClick={(e) => {
+              e.stopPropagation();
+              close();
+            }}
           >
-            &times;
+            <X className="h-8 w-8" />
           </button>
           <button
-            className="absolute left-4 text-white text-3xl font-bold"
-            onClick={showPrevImage}
+            className="absolute left-6 text-white hover:text-[#5eb4f7]"
+            aria-label="Previous image"
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
           >
-            &larr;
+            <ChevronLeft className="h-10 w-10" />
           </button>
           <button
-            className="absolute right-4 text-white text-3xl font-bold"
-            onClick={showNextImage}
+            className="absolute right-6 text-white hover:text-[#5eb4f7]"
+            aria-label="Next image"
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
           >
-            &rarr;
+            <ChevronRight className="h-10 w-10" />
           </button>
-          <Image
-            src={images[lightboxIndex]}
-            alt={`Project ${lightboxIndex + 1}`}
-            width={1200}
-            height={800}
-            className="rounded-lg"
-          />
+
+          <div className="relative w-[92vw] h-[86vh] max-w-[1600px] max-h-[1000px]" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={images[lightboxIndex]}
+              alt={`Project ${lightboxIndex + 1}`}
+              fill
+              sizes="92vw"
+              className="object-contain rounded-xl shadow-2xl mx-auto select-none"
+              priority
+              draggable={false}
+            />
+          </div>
         </div>
       )}
     </section>
