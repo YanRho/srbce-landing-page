@@ -14,19 +14,6 @@ const Footer = () => {
       {/* Top band / CTA */}
       <div className="border-b border-white/10">
         <div className="container mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <h2 className="text-xl md:text-2xl font-semibold text-center md:text-left">
-            Let’s build something great together
-          </h2>
-          <Link
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="inline-flex items-center justify-center rounded-xl bg-[#5eb4f7] px-5 py-3 font-semibold text-white shadow hover:bg-[#2b45ff] transition"
-          >
-            Get a Quote
-          </Link>
         </div>
       </div>
 

@@ -71,11 +71,7 @@ export const Hero = () => {
         </div>
 
         {/* Quick trust strip */}
-        <ul className="mt-8 md:mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-white/80">
-          <li className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#5eb4f7]"></span> Safety-first operations</li>
-          <li className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#5eb4f7]"></span> On-time delivery</li>
-          <li className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#5eb4f7]"></span> Quality workmanship</li>
-        </ul>
+        
       </div>
 
       {/* Scroll cue */}
