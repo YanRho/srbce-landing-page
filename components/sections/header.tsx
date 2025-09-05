@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils"; // optional: shadcn helper; replace with your own if not available
+import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 
 /**

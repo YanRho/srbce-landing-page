@@ -1,7 +1,6 @@
 "use client";
 
 import { Ruler, Hammer, MessageCircle } from "lucide-react";
-import Link from "next/link";
 
 const services = [
   {
