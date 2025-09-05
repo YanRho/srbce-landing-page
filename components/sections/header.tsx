@@ -19,7 +19,7 @@ import { Menu } from "lucide-react";
 
 const NAV_HEIGHT = 72; // keep in sync with header height styles
 
-const menuItems = [
+const menuItems : MenuItem[] = [
   { href: "#about", label: "ABOUT" },
   { href: "#gallery", label: "GALLERY" },
   { href: "#services", label: "SERVICES" },
