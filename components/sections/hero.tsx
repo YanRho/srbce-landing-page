@@ -69,8 +69,6 @@ export const Hero = () => {
             View Services
           </Button>
         </div>
-
-        {/* Quick trust strip */}
         
       </div>
 

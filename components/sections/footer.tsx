@@ -19,13 +19,9 @@ const Footer = () => {
 
       {/* Main grid */}
       <div className="container mx-auto px-6 py-12 grid gap-10 md:grid-cols-3">
-        {/* Brand & blurb */}
+        {/* Brand & blurb */}{/* Quick trust strip */}
         <div>
           <h3 className="text-2xl font-bold leading-tight">SRB Construction & Engineering Services</h3>
-          <p className="mt-3 text-white/80 max-w-prose text-sm">
-            Innovative, sustainable, and on‑time construction solutions—from survey & planning
-            to turnkey builds.
-          </p>
         </div>
 
         {/* Quick links */}
@@ -65,11 +61,7 @@ const Footer = () => {
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex items-start gap-3">
               <Mail className="h-4 w-4 text-[#5eb4f7] mt-0.5" />
-              {/* <span>TODO: Add Business email</span> */}
-            </li>
-            <li className="flex items-start gap-3">
-              <Phone className="h-4 w-4 text-[#5eb4f7] mt-0.5" />
-              {/* <span> TODO: Add Business Phone Number</span> */}
+              srbce.services@gmail.com
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="h-4 w-4 text-[#5eb4f7] mt-0.5" />
@@ -104,8 +96,6 @@ const Footer = () => {
             >
               <ArrowUp className="h-4 w-4" /> Top
             </button>
-            {/* <Link href="#privacy" className="hover:text-white/90">Privacy</Link>
-            <Link href="#terms" className="hover:text-white/90">Terms</Link> */}
           </div>
         </div>
       </div>
