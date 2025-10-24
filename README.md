@@ -38,13 +38,10 @@ Header + Hero Section
 ![alt text](image.png)
 
 About Section
-![alt text](image-1.png)
+![alt text](image-3.png)
 
 Gallery Section
 ![alt text](image-2.png)
 
-Services Section
-![alt text](image-3.png)
-
-Contact Form + Footer Section
+Services + Contact Form
 ![alt text](image-4.png)
