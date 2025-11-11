@@ -56,7 +56,7 @@ export const Gallery = () => {
     };
   }, [lightboxIndex, close, prev, next]);
 
-  // 🚀 Preload next/previous images for instant navigation
+  //  Preload next/previous images for instant navigation
   useEffect(() => {
     if (lightboxIndex === null) return;
     const preload = (src: string) => {
@@ -79,7 +79,7 @@ export const Gallery = () => {
           </p>
         </div>
 
-        {/* ✅ Responsive Grid */}
+        {/*  Responsive Grid */}
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {images.map((src, i) => (
             <li key={i}>
@@ -108,7 +108,7 @@ export const Gallery = () => {
         </ul>
       </div>
 
-      {/* 🪟 Lightbox Modal */}
+      {/*  Lightbox Modal */}
       {lightboxIndex !== null && (
         <div
           role="dialog"
@@ -117,7 +117,7 @@ export const Gallery = () => {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 animate-fade-in"
           onClick={close}
         >
-          {/* ✖ Close Button */}
+          {/*  Close Button */}
           <button
             className="absolute top-6 right-6 text-white hover:text-sky-400 transition"
             aria-label="Close lightbox"
@@ -129,7 +129,7 @@ export const Gallery = () => {
             <X className="h-8 w-8" />
           </button>
 
-          {/* ⬅ Prev / Next Buttons */}
+          {/* Prev / Next Buttons */}
           <button
             className="absolute left-6 text-white hover:text-sky-400 transition"
             aria-label="Previous image"
@@ -151,7 +151,7 @@ export const Gallery = () => {
             <ChevronRight className="h-10 w-10" />
           </button>
 
-          {/* ⚡ Crossfade Lightbox Images */}
+          {/*  Crossfade Lightbox Images */}
           <div
             className="relative w-[92vw] h-[86vh] max-w-[1600px] max-h-[1000px] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
