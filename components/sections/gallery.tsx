@@ -4,15 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-// Uses your existing local project images
 const images = [
-  "/images/projects/1.webp",
-  "/images/projects/2.webp",
-  "/images/projects/3.webp",
-  "/images/projects/4.webp",
-  "/images/projects/5.webp",
-  "/images/projects/6.webp",
-  "/images/projects/7.webp",
   "/images/projects/8.webp",
   "/images/projects/9.webp",
   "/images/projects/10.webp",
@@ -21,36 +13,61 @@ const images = [
   "/images/projects/13.webp",
   "/images/projects/14.webp",
   "/images/projects/15.webp",
+  "/images/projects/16.webp",
+  "/images/projects/17.webp",
+  "/images/projects/18.webp",
+  "/images/projects/19.webp",
+  "/images/projects/20.webp",
+  "/images/projects/21.webp",
+  "/images/projects/22.webp",
+  "/images/projects/23.webp",
 ];
 
 export const Gallery = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const open = (i: number) => setLightboxIndex(i);
-  const close = () => setLightboxIndex(null);
-  const prev = useCallback(() => {
-    setLightboxIndex((p) => (p === null ? p : p === 0 ? images.length - 1 : p - 1));
-  }, []);
-  const next = useCallback(() => {
-    setLightboxIndex((p) => (p === null ? p : p === images.length - 1 ? 0 : p + 1));
-  }, []);
+  const close = useCallback(() => setLightboxIndex(null), []);
+  const prev = useCallback(
+    () => setLightboxIndex((p) => (p === null ? p : p === 0 ? images.length - 1 : p - 1)),
+    []
+  );
+  const next = useCallback(
+    () => setLightboxIndex((p) => (p === null ? p : p === images.length - 1 ? 0 : p + 1)),
+    []
+  );
 
-  // Keyboard + scroll lock when lightbox open
+  // 🔒 Scroll lock + keyboard navigation
   useEffect(() => {
     if (lightboxIndex === null) return;
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
-    document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+
     return () => {
+      document.body.style.overflow = "";
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
     };
-  }, [lightboxIndex, next, prev]);
+  }, [lightboxIndex, close, prev, next]);
+
+  // 🚀 Preload next/previous images for instant navigation
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const preload = (src: string) => {
+      const img = new window.Image();
+      img.src = src;
+    };
+    const nextIndex = (lightboxIndex + 1) % images.length;
+    const prevIndex = (lightboxIndex - 1 + images.length) % images.length;
+    preload(images[nextIndex]);
+    preload(images[prevIndex]);
+  }, [lightboxIndex]);
 
   return (
     <section id="gallery" className="py-20 bg-white text-slate-900">
@@ -62,10 +79,10 @@ export const Gallery = () => {
           </p>
         </div>
 
-        {/* Responsive Grid */}
+        {/* ✅ Responsive Grid */}
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {images.map((src, i) => (
-            <li key={i} className="">
+            <li key={i}>
               <figure className="group relative overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm focus-within:shadow-md">
                 <button
                   type="button"
@@ -78,8 +95,9 @@ export const Gallery = () => {
                       src={src}
                       alt={`Project ${i + 1}`}
                       fill
+                      unoptimized
                       sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                       priority={i < 2}
                     />
                   </div>
@@ -90,17 +108,18 @@ export const Gallery = () => {
         </ul>
       </div>
 
-      {/* Lightbox */}
+      {/* 🪟 Lightbox Modal */}
       {lightboxIndex !== null && (
         <div
           role="dialog"
           aria-modal="true"
           aria-label={`Project ${lightboxIndex + 1}`}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 animate-fade-in"
           onClick={close}
         >
+          {/* ✖ Close Button */}
           <button
-            className="absolute top-6 right-6 text-white hover:text-[#5eb4f7]"
+            className="absolute top-6 right-6 text-white hover:text-sky-400 transition"
             aria-label="Close lightbox"
             onClick={(e) => {
               e.stopPropagation();
@@ -109,8 +128,10 @@ export const Gallery = () => {
           >
             <X className="h-8 w-8" />
           </button>
+
+          {/* ⬅ Prev / Next Buttons */}
           <button
-            className="absolute left-6 text-white hover:text-[#5eb4f7]"
+            className="absolute left-6 text-white hover:text-sky-400 transition"
             aria-label="Previous image"
             onClick={(e) => {
               e.stopPropagation();
@@ -120,7 +141,7 @@ export const Gallery = () => {
             <ChevronLeft className="h-10 w-10" />
           </button>
           <button
-            className="absolute right-6 text-white hover:text-[#5eb4f7]"
+            className="absolute right-6 text-white hover:text-sky-400 transition"
             aria-label="Next image"
             onClick={(e) => {
               e.stopPropagation();
@@ -130,16 +151,26 @@ export const Gallery = () => {
             <ChevronRight className="h-10 w-10" />
           </button>
 
-          <div className="relative w-[92vw] h-[86vh] max-w-[1600px] max-h-[1000px]" onClick={(e) => e.stopPropagation()}>
-            <Image
-              src={images[lightboxIndex]}
-              alt={`Project ${lightboxIndex + 1}`}
-              fill
-              sizes="92vw"
-              className="object-contain rounded-xl shadow-2xl mx-auto select-none"
-              priority
-              draggable={false}
-            />
+          {/* ⚡ Crossfade Lightbox Images */}
+          <div
+            className="relative w-[92vw] h-[86vh] max-w-[1600px] max-h-[1000px] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {images.map((src, i) => (
+              <Image
+                key={i}
+                src={src}
+                alt={`Project ${i + 1}`}
+                fill
+                unoptimized
+                sizes="92vw"
+                className={`object-contain rounded-xl shadow-2xl mx-auto select-none transition-opacity duration-300 ${
+                  i === lightboxIndex ? "opacity-100" : "opacity-0"
+                }`}
+                draggable={false}
+                priority={i === lightboxIndex}
+              />
+            ))}
           </div>
         </div>
       )}
